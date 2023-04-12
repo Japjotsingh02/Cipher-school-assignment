@@ -36,8 +36,9 @@ function SignUp({callback}) {
                 navigate('/profile');
             })
             .catch((err)=>{
+                const message=err.response.data.message;
                 console.log(err);
-                alert(err.message || err);
+                alert(message || err.message);
             })
     };
 

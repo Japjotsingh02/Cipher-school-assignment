@@ -32,7 +32,8 @@ function LogIn({callback}) {
                 navigate('/profile');
             })
             .catch((err)=>{
-                alert(err.message || err);
+                const message=err.response.data.message;
+                alert(message || err.message);
             });
     };
 

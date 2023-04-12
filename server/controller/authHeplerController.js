@@ -6,9 +6,7 @@ async function protectRoute(req,res,next){
     try{
         const token=req.headers["isLoggedIn"] || req.headers["isloggedin"];
         if(token){
-            console.log('hi');
             // console.log(req.cookies);
-
             let payload=jwt.verify(token,process.env.SECRET_KEY);
 
             if(payload){

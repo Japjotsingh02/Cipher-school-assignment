@@ -73,12 +73,12 @@ const userSchema=Schema({
 { timestamps: true });
 
 
-// userSchema.pre('save',async function(){
-//     let salt =await bcrypt.genSalt();
-//     let hashedString=await bcrypt.hash(this.password,salt);
-//     // console.log(hashedString);
-//     this.password=hashedString;
-// });
+userSchema.pre('save',async function(){
+    let salt =await bcrypt.genSalt();
+    let hashedString=await bcrypt.hash(this.password,salt);
+    console.log(hashedString);
+    this.password=hashedString;
+});
 
 const User=model('User',userSchema);
 

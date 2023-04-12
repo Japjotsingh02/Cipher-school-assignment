@@ -10,18 +10,27 @@ const userProfilesSchema=Schema({
     },
     linkedin:{
         type:String,
+        default:"",
     },
     github:{
         type:String,
+        default:"",
     },
     facebook:{
         type:String,
+        default:"",
     },
     twitter:{
         type:String,
+        default:"",
+    },
+    instagram:{
+        type:String,
+        default:"",
     },
     otherWeb:{
         type:String,
+        default:"",
     }
 },
 { timestamps: true });
