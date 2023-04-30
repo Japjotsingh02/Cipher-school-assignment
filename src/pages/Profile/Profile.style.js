@@ -89,12 +89,14 @@ export const Section=styled.div`
     }
 
     .edit-btn{
+        font-family:'Open Sans',sans-serif;
         font-size:13px;
         font-weight:400;
         width:80px;
         background-color:#f3912e;
         border-radius:3px;
         text-align:center;
+        cursor:pointer;
         text-transform:capitalize;
         padding:4px 0px;
     }
@@ -130,7 +132,58 @@ export const Section=styled.div`
 `;
 
 export const Model=styled.div`
-    
+    position:fixed;
+    inset:0px;
+    font-family:'Open Sans',sans-serif;
+
+    form{
+        background-color: #262c36;
+        padding: 2rem;
+        position: absolute;
+        top: 25%;
+        width: 35%;
+        z-index: 99;
+        left: 31%;
+        border-radius: 1rem;
+    }
+
+    .input{
+        background-color: #15181e;
+        color:hsla(0,0%,100%,.85);
+        font-size:15px;
+    }
+
+    .modelBg{
+        position:fixed;
+        z-index:30;
+        height:100vh;
+        width:100vw;
+        background-color: rgba(0,0,0,.5);
+        inset:0px;
+    }
+
+    .submit{
+        border:0;
+        font-size:14px;
+        color:#ffffff;
+        height:2.5rem;
+        width:7rem;
+        border-radius:6px;
+    }
+
+    .cancel{
+        background-color:hsla(0,0%,100%,.85);
+        border:0;
+        border-radius:6px;
+        font-size:14px;
+        height:2.5rem;
+        width:7rem;
+        margin-right:1rem;
+    }
+
+    .buttons{
+        float:right;
+    }
 `;
 
 

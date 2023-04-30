@@ -1,6 +1,6 @@
 const express=require("express");
 const protectRoute = require("../controller/authHeplerController");
-const { postUser, loginUser, getUserProfile, updateUserProfile } = require("../controller/userController");
+const { postUser, loginUser, getUserProfile, updateUserProfile, updateUserPassword } = require("../controller/userController");
 const userRouter=express.Router();
 
 userRouter
@@ -23,7 +23,7 @@ userRouter
     .patch(updateUserProfile);
 
 userRouter
-    .route('/resetPassword')
-    
+    .route('/updatePassword')
+    .patch(updateUserPassword);
 
 module.exports=userRouter;

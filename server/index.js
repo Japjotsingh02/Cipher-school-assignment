@@ -11,6 +11,4 @@ app.use(express.urlencoded({extended: true}));
 
 app.use('/user',userRouter);
 
-
-
 app.listen(5000);

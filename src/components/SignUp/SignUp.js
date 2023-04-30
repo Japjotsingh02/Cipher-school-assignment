@@ -24,22 +24,25 @@ function SignUp({callback}) {
 
     const handleSubmit=async (e)=>{
         // console.log(userDetails);
-        e.preventDefault();
-        await axios.post('http://localhost:5000/user/signUp',userDetails)
-            .then((data)=>{
-                console.log(data);
-                if(data.data.token){
-                    localStorage.setItem('isLoggedIn',data.data.token);
-                }
-            })
-            .then(()=>{
-                navigate('/profile');
-            })
-            .catch((err)=>{
-                const message=err.response.data.message;
-                console.log(err);
-                alert(message || err.message);
-            })
+        try{
+            e.preventDefault();
+            await axios.post('http://localhost:5000/user/signUp',userDetails)
+                .then((data)=>{
+                    if(data.data.token){
+                        localStorage.setItem('isLoggedIn',data.data.token);
+                    }
+                })
+                .then(()=>{
+                    navigate('/profile');
+                })
+                .catch((err)=>{
+                    const message=err.response.data.message;
+                    alert(message || err.message);
+                })
+        }
+        catch(err){
+            alert(err);
+        }
     };
 
     return (
@@ -60,7 +63,7 @@ function SignUp({callback}) {
 
                 <div className='changeState'>
                     <span className='no-account'>Already have an account?</span>
-                    <span className='get-started'  onClick={()=>callback()}>SignIn Now</span>
+                    <span className='get-started'  onClick={()=>callback()}>  SignIn Now</span>
                 </div>
             </div>
         </Wrapper>

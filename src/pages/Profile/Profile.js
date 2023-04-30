@@ -182,7 +182,7 @@ function Profile() {
 
             <hr/>
 
-            <SecurityCard editText={editText} userData={userData}/>
+            <SecurityCard editText={editText} userData={userData} setEditText={setEditText} id={userData._id}/>
 
             <hr/>
 

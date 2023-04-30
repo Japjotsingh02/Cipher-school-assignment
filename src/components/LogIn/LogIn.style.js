@@ -68,6 +68,7 @@ export const Wrapper=styled.div`
         color:white;
         padding:0.6rem;
         border:0;
+        cursor:pointer;
         font-size:1rem;
         margin:12px 0;
         border-radius:10px;
@@ -78,6 +79,7 @@ export const Wrapper=styled.div`
 
         .get-started{
             color:#f3912e;
+            cursor:pointer;
         }
     }
 `;

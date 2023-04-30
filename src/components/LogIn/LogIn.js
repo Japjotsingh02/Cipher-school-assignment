@@ -21,20 +21,25 @@ function LogIn({callback}) {
 
     const handleSubmit=async (e)=>{
         // console.log(userDetails);
-        e.preventDefault();
-        await axios.post('http://localhost:5000/user/login',userDetails)
-            .then((data)=>{
-                if(data.data.token){
-                    localStorage.setItem('isLoggedIn',data.data.token);
-                }
-            })
-            .then(()=>{
-                navigate('/profile');
-            })
-            .catch((err)=>{
-                const message=err.response.data.message;
-                alert(message || err.message);
-            });
+        try{
+            e.preventDefault();
+            await axios.post('http://localhost:5000/user/login',userDetails)
+                .then((data)=>{
+                    if(data.data.token){
+                        localStorage.setItem('isLoggedIn',data.data.token);
+                    }
+                })
+                .then(()=>{
+                    navigate('/profile');
+                })
+                .catch((err)=>{
+                    const message=err.response.data.message;
+                    alert(message || err.message);
+                });
+        }
+        catch(err){
+            alert(err);
+        }
     };
 
     return (
@@ -53,7 +58,7 @@ function LogIn({callback}) {
 
                 <div className='changeState'>
                     <span className='no-account'>Don't have an account?</span>
-                    <span className='get-started' onClick={()=>callback()}>Get Started</span>
+                    <span className='get-started' onClick={()=>callback()}>  Get Started</span>
                 </div>
             </div>
         </Wrapper>

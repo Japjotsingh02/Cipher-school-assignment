@@ -68,17 +68,26 @@ const userSchema=Schema({
     following:{
         type:Number,
         default:0,
-    }
+    },
+    // resetToken:String,
 },
 { timestamps: true });
 
+async function genSaltAndEncryptPassword(password){
+    let salt =await bcrypt.genSalt();
+    let hashedString=await bcrypt.hash(password,salt);
+    return hashedString;
+}
 
 userSchema.pre('save',async function(){
-    let salt =await bcrypt.genSalt();
-    let hashedString=await bcrypt.hash(this.password,salt);
-    console.log(hashedString);
-    this.password=hashedString;
+    let encryptedPass=await genSaltAndEncryptPassword(this.password);
+    this.password=encryptedPass;
 });
+
+userSchema.methods.updatePassword=async (newPass)=>{
+    let encryptedPass=await genSaltAndEncryptPassword(newPass);
+    return encryptedPass;
+};
 
 const User=model('User',userSchema);
 
