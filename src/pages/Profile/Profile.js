@@ -7,17 +7,18 @@ import SecurityCard from '../../components/SecurityCard/SecurityCard';
 function Profile() {
     const navigate=useNavigate();
     const [userData,setuserData]=useState({});
+    const [isLoading,setIsLoading]=useState(true);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/user/profile",{
+        axios.get(`${process.env.REACT_APP_BASE_URL}/profile`,{
           headers:{
               'Content-Type': 'application/json',
               "isLoggedIn":localStorage.getItem("isLoggedIn"),
           }
         })
         .then((data)=>{
-            console.log(data.data.user);
             setuserData(data.data.user);
+            isLoading(false);
         })
         .catch((err)=>{
             console.log(err.message,err);
@@ -46,15 +47,14 @@ function Profile() {
             }));
         }
         else{
-            // console.log(userData);
             const sendData={
                 ...userData,
                 updated:id,
             }
 
-            await axios.patch("http://localhost:5000/user/profile",sendData)
+            await axios.patch(`${process.env.REACT_APP_BASE_URL}/profile`,sendData)
                 .then((data)=>{
-                    console.log(data);
+                    console.log("Profile data updated");
                 })
                 .catch((err)=>{
                     const message=err.response.data.message;
@@ -93,12 +93,13 @@ function Profile() {
         }
     };
 
-    return (
+    return ( 
         <Wrapper>
             <ProfileHead>
                 <div className='pf-user-box'>
                     <div className='UserHead'>
                         <img alt='profileImg' src={userData && userData.profileImg} className="profileImg"/>
+                        
                         <div>
                             <div className='repu'>Hello,</div>
                             <div className='username'>{userData && userData.fName + ' ' + userData.lName}</div>

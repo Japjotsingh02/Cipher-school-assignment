@@ -26,7 +26,7 @@ function SignUp({callback}) {
         // console.log(userDetails);
         try{
             e.preventDefault();
-            await axios.post('http://localhost:5000/user/signUp',userDetails)
+            await axios.post(`${process.env.REACT_APP_BASE_URL}/signUp`,userDetails)
                 .then((data)=>{
                     if(data.data.token){
                         localStorage.setItem('isLoggedIn',data.data.token);

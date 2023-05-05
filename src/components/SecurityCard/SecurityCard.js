@@ -18,7 +18,7 @@ function SecurityCard({editText,userData,id}) {
             newPass:newPass.current?.value
         };
 
-        await axios.patch("http://localhost:5000/user/updatePassword",obj)
+        await axios.patch(`${process.env.REACT_APP_BASE_URL}/updatePassword`,obj)
             .then((data)=>{
                 console.log(data.data.message);
                 setOpenPasswordModel(false);
