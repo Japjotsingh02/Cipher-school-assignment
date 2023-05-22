@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ProfileHead, Section, Wrapper } from './Profile.style';
 import { useNavigate } from 'react-router-dom';
 import SecurityCard from '../../components/SecurityCard/SecurityCard';
+import { Box, CircularProgress } from '@mui/material';
+import WebSection from '../../components/WebSection';
 
 function Profile() {
     const navigate=useNavigate();
@@ -18,7 +20,7 @@ function Profile() {
         })
         .then((data)=>{
             setuserData(data.data.user);
-            isLoading(false);
+            setIsLoading(false);
         })
         .catch((err)=>{
             console.log(err.message,err);
@@ -94,107 +96,90 @@ function Profile() {
     };
 
     return ( 
-        <Wrapper>
-            <ProfileHead>
-                <div className='pf-user-box'>
-                    <div className='UserHead'>
-                        <img alt='profileImg' src={userData && userData.profileImg} className="profileImg"/>
-                        
-                        <div>
-                            <div className='repu'>Hello,</div>
-                            <div className='username'>{userData && userData.fName + ' ' + userData.lName}</div>
-                            <div className='email'>{userData && userData.email}</div>
+        <>
+            {isLoading ?
+            <Box
+            width={"100%"}
+            m='1rem auto'
+            display='flex'
+            alignItems={"center"}
+            justifyContent={"center"}
+            height={'80vh'}
+          >
+                <CircularProgress/>
+            </Box> : 
+            <Wrapper>
+                <ProfileHead>
+                    <div className='pf-user-box'>
+                        <div className='UserHead'>
+                            <img alt='profileImg' src={userData && userData.profileImg} className="profileImg"/>
+                            
+                            <div>
+                                <div className='repu'>Hello,</div>
+                                <div className='username'>{userData && userData.fName + ' ' + userData.lName}</div>
+                                <div className='email'>{userData && userData.email}</div>
+                            </div>
+                        </div>
+                        <div className='pf-followers'>{userData && userData.followers} Followers</div>
+                    </div>
+                </ProfileHead>
+                
+                <Section>
+                    <div className='sectionHead'>
+                        <div className='section-topic'>About Me</div>
+                        <div className='edit-btn' id='description' onClick={(e)=>handleEditBtn(e)}>{ editText && editText.description}</div>
+                    </div>
+                    <textarea placeholder='Add something about you.' id='description' className='textarea' readOnly={editText.description==='edit'} value={userData.description} onInput={(e)=>handleInputChange(e)}/>
+                </Section>
+
+                <hr/>
+
+                <Section>
+                    <div className='sectionHead'>
+                        <div>Cipher Map</div>
+                    </div>
+                    <div>Cipher Map</div>
+                </Section>
+
+                <hr/>
+
+                <WebSection handleEditBtn={handleEditBtn} handleInputChange={handleInputChange} editText={editText} userData={userData}/>                
+
+                <hr/>
+
+                <Section>
+                    <div className='sectionHead'>
+                        <div className='section-topic'>Professional information</div>
+                        <div className='edit-btn' id='profession' onClick={(e)=>handleEditBtn(e)}>{ editText && editText.profession}</div>
+                    </div>
+                    <div className='education'>
+                        <div className='education-card'>
+                            <label className='label' htmlFor='linkedin'>Highest education</label>
+                            <input type="url" name='linkedin' placeholder='Linkedin' className='input' readOnly={editText.profession==='edit'}/>
+                        </div>
+                        <div className='education-card'>
+                            <label className='label' htmlFor='linkedin'>What do you do currently?</label>
+                            <input type="url" name='linkedin' placeholder='Github' className='input' readOnly={editText.profession==='edit'}/>
                         </div>
                     </div>
-                    <div className='pf-followers'>{userData && userData.followers} Followers</div>
-                </div>
-            </ProfileHead>
-            
-            <Section>
-                <div className='sectionHead'>
-                    <div className='section-topic'>About Me</div>
-                    <div className='edit-btn' id='description' onClick={(e)=>handleEditBtn(e)}>{ editText && editText.description}</div>
-                </div>
-                <textarea placeholder='Add something about you.' id='description' className='textarea' readOnly={editText.description==='edit'} value={userData.description} onInput={(e)=>handleInputChange(e)}/>
-            </Section>
+                </Section>
 
-            <hr/>
+                <hr/>
 
-            <Section>
-                <div className='sectionHead'>
-                    <div>Cipher Map</div>
-                </div>
-                <div>Cipher Map</div>
-            </Section>
+                <SecurityCard editText={editText} userData={userData} setEditText={setEditText} id={userData._id}/>
 
-            <hr/>
+                <hr/>
 
-            <Section>
-                <div className='sectionHead'>
-                    <div className='section-topic'>On the web</div>
-                    <div className='edit-btn' id='profiles' onClick={(e)=>handleEditBtn(e)}>{ editText && editText.profiles}</div>
-                </div>
-                <div className='profiles'>
-                    <div className='profile-card'>
-                        <label className='label' htmlFor='linkedin'>Linkedin</label>
-                        <input type="url" name='linkedin' placeholder='Linkedin' id='profiles' className='input'  value={userData.profiles?.linkedin} onInput={(e)=>handleInputChange(e)} readOnly={editText.profiles==='edit'}/>
+                <Section>
+                    <div className='sectionHead'>
+                        <div className='section-topic'>Interests</div>
+                        <div className='edit-btn' id='interests' onClick={()=>handleEditBtn()}>{ editText && editText.interests}</div>
                     </div>
-                    <div className='profile-card'>
-                        <label className='label' htmlFor='github'>Github</label>
-                        <input type="url" name='github' placeholder='Github' className='input' id='profiles' value={userData.profiles?.github} onInput={(e)=>handleInputChange(e)} readOnly={editText.profiles==='edit'}/>
-                    </div>
-                    <div className='profile-card'>
-                        <label className='label' htmlFor='facebook'>facebook</label>
-                        <input type="url" name='facebook' placeholder='Facebook' className='input' id='profiles' value={userData.profiles?.facebook} onInput={(e)=>handleInputChange(e)} readOnly={editText.profiles==='edit'}/>
-                    </div>
-                    <div className='profile-card'>
-                        <label className='label' htmlFor='twitter'>twitter</label>
-                        <input type="url" name='twitter' placeholder='Twitter' className='input' id='profiles' value={userData.profiles?.twitter} onInput={(e)=>handleInputChange(e)} readOnly={editText.profiles==='edit'}/>
-                    </div>
-                    <div className='profile-card'>
-                        <label className='label' htmlFor='instagram'>instagram</label>
-                        <input type="url"  name='instagram' placeholder='Instagram' className='input' id='profiles' value={userData.profiles?.instagram} onInput={(e)=>handleInputChange(e)} readOnly={editText.profiles==='edit'}/>
-                    </div>
-                    <div className='profile-card'>
-                        <label className='label' htmlFor='otherWeb'>website</label>
-                        <input type="url"  name='otherWeb' placeholder='Your Website' className='input' id='profiles' value={userData.profiles?.otherWeb} onInput={(e)=>handleInputChange(e)} readOnly={editText.profiles==='edit'}/>
-                    </div>
-                </div>
-            </Section>
+                </Section>
 
-            <hr/>
-
-            <Section>
-                <div className='sectionHead'>
-                    <div className='section-topic'>Professional information</div>
-                    <div className='edit-btn' id='profession' onClick={(e)=>handleEditBtn(e)}>{ editText && editText.profession}</div>
-                </div>
-                <div className='education'>
-                    <div className='education-card'>
-                        <label className='label' htmlFor='linkedin'>Highest education</label>
-                        <input type="url" name='linkedin' placeholder='Linkedin' className='input' readOnly={editText.profession==='edit'}/>
-                    </div>
-                    <div className='education-card'>
-                        <label className='label' htmlFor='linkedin'>What do you do currently?</label>
-                        <input type="url" name='linkedin' placeholder='Github' className='input' readOnly={editText.profession==='edit'}/>
-                    </div>
-                </div>
-            </Section>
-
-            <hr/>
-
-            <SecurityCard editText={editText} userData={userData} setEditText={setEditText} id={userData._id}/>
-
-            <hr/>
-
-            <Section>
-                <div className='sectionHead'>
-                    <div className='section-topic'>Interests</div>
-                    <div className='edit-btn' id='interests' onClick={()=>handleEditBtn()}>{ editText && editText.interests}</div>
-                </div>
-            </Section>
-
-        </Wrapper>
+            </Wrapper>
+            }
+        </>
     );
 }
 
